@@ -8,10 +8,14 @@ export default function Home() {
   }
 
   if (session) {
+    const onClickSignOut = async () => {
+      await signOut({redirect: false});
+      window.location = `https://${process.env.NEXT_PUBLIC_COGNITO_DOMAIN}/logout?client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&logout_uri=${window.location}`;
+    };
     return (
       <>
         Signed in as {session.user.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
+        <button onClick={onClickSignOut}>Sign out</button>
       </>
     );
   }
